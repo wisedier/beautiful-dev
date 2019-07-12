@@ -1,0 +1,78 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mirror
+  namespace: bdev
+  labels:
+    app: mirror
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: http
+  selector:
+    app: mirror
+    tier: frontend
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mirror-pv
+  namespace: bdev
+  labels:
+    app: mirror
+    type: local
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: standard
+  hostPath:
+    path: "/srv/bdev/mirror/storage/html"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mirror-pvc
+  namespace: bdev
+  labels:
+    app: mirror
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  volumeName: mirror-pv
+  storageClassName: standard
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mirror
+  namespace: bdev
+  labels:
+    app: mirror
+spec:
+  template:
+    metadata:
+      labels:
+        app: mirror
+        tier: frontend
+    spec:
+      containers:
+        - image: nginx:alpine
+          name: mirror
+          ports:
+            - containerPort: 80
+              name: mirror
+          volumeMounts:
+            - name: mirror
+              mountPath: "/usr/share/nginx/html"
+      volumes:
+        - name: mirror
+          persistentVolumeClaim:
+            claimName: mirror-pvc
