@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-bdev
+  namespace: bdev
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: mirror.bdev.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: mirror
+              servicePort: 80

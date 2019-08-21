@@ -1,0 +1,12 @@
+[Unit]
+Description=Minikube Port Forwarding Service
+
+[Service]
+User=bdev
+ExecStart=/home/bdev/services/scripts/kube_port_fwd.sh
+TimeoutSec=30
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
