@@ -1,0 +1,15 @@
+global:
+  edition: ce
+  imagePullPolicy: Never
+  ingress:
+    configureCertmanager: false
+    class: "nginx"
+  hosts:
+    domain: bdev.com
+    externalIP: 172.168.216.11
+certmanager:
+  install: false
+nginx-ingress:
+  enabled: false
+gitlab-runner:
+  install: false
