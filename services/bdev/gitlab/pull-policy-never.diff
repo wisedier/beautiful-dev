@@ -1,0 +1,152 @@
+diff --git a/services/bdev/gitlab/helm/charts/gitlab/charts/gitaly/templates/statefulset.yml b/services/bdev/gitlab/helm/charts/gitlab/charts/gitaly/templates/statefulset.yml
+index 5e5f26e..7dfde46 100644
+--- a/services/bdev/gitlab/helm/charts/gitlab/charts/gitaly/templates/statefulset.yml
++++ b/services/bdev/gitlab/helm/charts/gitlab/charts/gitaly/templates/statefulset.yml
+@@ -36,6 +36,7 @@ spec:
+         - name: configure
+           command: ['sh', '/config/configure']
+           image: {{ .Values.init.image }}:{{ .Values.init.tag }}
++          imagePullPolicy: Never
+           volumeMounts:
+ {{ include "gitlab.extraVolumeMounts" . | indent 10 }}
+           - name: gitaly-config
+diff --git a/services/bdev/gitlab/helm/charts/gitlab/charts/gitlab-monitor/templates/deployment.yaml b/services/bdev/gitlab/helm/charts/gitlab/charts/gitlab-monitor/templates/deployment.yaml
+index 2bd16e1..7e747af 100644
+--- a/services/bdev/gitlab/helm/charts/gitlab/charts/gitlab-monitor/templates/deployment.yaml
++++ b/services/bdev/gitlab/helm/charts/gitlab/charts/gitlab-monitor/templates/deployment.yaml
+@@ -53,6 +53,7 @@ spec:
+         - name: configure
+           command: ['sh', '/config/configure']
+           image: {{ .Values.init.image }}:{{ .Values.init.tag }}
++          imagePullPolicy: Never
+           volumeMounts:
+ {{ include "gitlab.extraVolumeMounts" . | indent 10 }}
+ {{ include "gitlab.psql.ssl.volumeMount" . | indent 10 }}
+diff --git a/services/bdev/gitlab/helm/charts/gitlab/charts/gitlab-shell/templates/deployment.yaml b/services/bdev/gitlab/helm/charts/gitlab/charts/gitlab-shell/templates/deployment.yaml
+index 7b4952e..8d316ec 100644
+--- a/services/bdev/gitlab/helm/charts/gitlab/charts/gitlab-shell/templates/deployment.yaml
++++ b/services/bdev/gitlab/helm/charts/gitlab/charts/gitlab-shell/templates/deployment.yaml
+@@ -33,6 +33,7 @@ spec:
+         - name: configure
+           command: ['sh', '/config/configure']
+           image: {{ .Values.init.image }}:{{ .Values.init.tag }}
++          imagePullPolicy: Never
+           volumeMounts:
+ {{ include "gitlab.extraVolumeMounts" . | indent 10 }}
+           - name: shell-config
+diff --git a/services/bdev/gitlab/helm/charts/gitlab/charts/mailroom/templates/deployment.yaml b/services/bdev/gitlab/helm/charts/gitlab/charts/mailroom/templates/deployment.yaml
+index 9b2f22f..7fe9fa0 100644
+--- a/services/bdev/gitlab/helm/charts/gitlab/charts/mailroom/templates/deployment.yaml
++++ b/services/bdev/gitlab/helm/charts/gitlab/charts/mailroom/templates/deployment.yaml
+@@ -54,6 +54,7 @@ spec:
+         - name: configure
+           command: ['sh', '/config/configure']
+           image: {{ .Values.init.image }}:{{ .Values.init.tag }}
++          imagePullPolicy: Never
+           volumeMounts:
+ {{ include "gitlab.extraVolumeMounts" . | indent 10 }}
+           - name: mailroom-config
+diff --git a/services/bdev/gitlab/helm/charts/gitlab/charts/migrations/templates/_jobspec.yaml b/services/bdev/gitlab/helm/charts/gitlab/charts/migrations/templates/_jobspec.yaml
+index e0de4cd..baa7de6 100644
+--- a/services/bdev/gitlab/helm/charts/gitlab/charts/migrations/templates/_jobspec.yaml
++++ b/services/bdev/gitlab/helm/charts/gitlab/charts/migrations/templates/_jobspec.yaml
+@@ -28,6 +28,7 @@ spec:
+         - name: configure
+           command: ['sh', '/config/configure']
+           image: {{ .Values.init.image }}:{{ .Values.init.tag }}
++          imagePullPolicy: Never
+           volumeMounts:
+ {{ include "gitlab.extraVolumeMounts" . | indent 10 }}
+ {{ include "gitlab.psql.ssl.volumeMount" . | indent 10 }}
+diff --git a/services/bdev/gitlab/helm/charts/gitlab/charts/sidekiq/templates/deployment.yaml b/services/bdev/gitlab/helm/charts/gitlab/charts/sidekiq/templates/deployment.yaml
+index eda7ef8..cd5c207 100644
+--- a/services/bdev/gitlab/helm/charts/gitlab/charts/sidekiq/templates/deployment.yaml
++++ b/services/bdev/gitlab/helm/charts/gitlab/charts/sidekiq/templates/deployment.yaml
+@@ -100,6 +100,7 @@ spec:
+         - name: configure
+           command: ['sh', '/config/configure']
+           image: {{ $initImage }}:{{ $initTag }}
++          imagePullPolicy: Never
+           volumeMounts:
+ {{ include "gitlab.extraVolumeMounts" $ | indent 10 }}
+ {{ include "gitlab.psql.ssl.volumeMount" $ | indent 10 }}
+diff --git a/services/bdev/gitlab/helm/charts/gitlab/charts/task-runner/templates/backup-job.yaml b/services/bdev/gitlab/helm/charts/gitlab/charts/task-runner/templates/backup-job.yaml
+index 35a938d..16858c7 100644
+--- a/services/bdev/gitlab/helm/charts/gitlab/charts/task-runner/templates/backup-job.yaml
++++ b/services/bdev/gitlab/helm/charts/gitlab/charts/task-runner/templates/backup-job.yaml
+@@ -39,6 +39,7 @@ spec:
+             - name: configure
+               command: ['sh', '/config/configure']
+               image: {{ .Values.init.image }}:{{ .Values.init.tag }}
++              imagePullPolicy: Never
+               volumeMounts:
+ {{ include "gitlab.extraVolumeMounts" . | indent 16 }}
+ {{ include "gitlab.psql.ssl.volumeMount" . | indent 16 }}
+diff --git a/services/bdev/gitlab/helm/charts/gitlab/charts/task-runner/templates/deployment.yaml b/services/bdev/gitlab/helm/charts/gitlab/charts/task-runner/templates/deployment.yaml
+index 3aba70c..d7f3801 100644
+--- a/services/bdev/gitlab/helm/charts/gitlab/charts/task-runner/templates/deployment.yaml
++++ b/services/bdev/gitlab/helm/charts/gitlab/charts/task-runner/templates/deployment.yaml
+@@ -40,6 +40,7 @@ spec:
+         - name: configure
+           command: ['sh', '/config/configure']
+           image: {{ .Values.init.image }}:{{ .Values.init.tag }}
++          imagePullPolicy: Never
+           volumeMounts:
+ {{ include "gitlab.extraVolumeMounts" . | indent 10 }}
+ {{ include "gitlab.psql.ssl.volumeMount" . | indent 10 }}
+diff --git a/services/bdev/gitlab/helm/charts/gitlab/charts/unicorn/templates/deployment.yaml b/services/bdev/gitlab/helm/charts/gitlab/charts/unicorn/templates/deployment.yaml
+index fc86fef..065ca1d 100644
+--- a/services/bdev/gitlab/helm/charts/gitlab/charts/unicorn/templates/deployment.yaml
++++ b/services/bdev/gitlab/helm/charts/gitlab/charts/unicorn/templates/deployment.yaml
+@@ -65,6 +65,7 @@ spec:
+           command: ['sh']
+           args: [ '-c', 'sh -x /config-unicorn/configure ; sh -x /config-workhorse/configure']
+           image: {{ .Values.init.image }}:{{ .Values.init.tag }}
++          imagePullPolicy: Never
+           volumeMounts:
+ {{ include "gitlab.extraVolumeMounts" . | indent 10 }}
+ {{ include "gitlab.psql.ssl.volumeMount" . | indent 10 }}
+diff --git a/services/bdev/gitlab/helm/charts/minio/values.yaml b/services/bdev/gitlab/helm/charts/minio/values.yaml
+index 848e6d1..1d7180e 100644
+--- a/services/bdev/gitlab/helm/charts/minio/values.yaml
++++ b/services/bdev/gitlab/helm/charts/minio/values.yaml
+@@ -3,7 +3,7 @@
+ ##
+ image: "minio/minio"
+ imageTag: "RELEASE.2017-12-28T01-21-00Z"
+-imagePullPolicy: "Always"
++imagePullPolicy: "Never"
+ pullSecrets: []
+ 
+ minioMc:
+@@ -231,4 +231,4 @@ maxUnavailable: 1
+ ## Allow to overwrite under which User and Group we're running.
+ securityContext:
+   runAsUser: 1000
+-  fsGroup: 1000
+\ No newline at end of file
++  fsGroup: 1000
+diff --git a/services/bdev/gitlab/helm/charts/redis-ha/templates/redis-server-statefulset.yaml b/services/bdev/gitlab/helm/charts/redis-ha/templates/redis-server-statefulset.yaml
+index e7c582e..c35d94b 100644
+--- a/services/bdev/gitlab/helm/charts/redis-ha/templates/redis-server-statefulset.yaml
++++ b/services/bdev/gitlab/helm/charts/redis-ha/templates/redis-server-statefulset.yaml
+@@ -56,6 +56,7 @@ spec:
+       initContainers:
+         - name: configure
+           image: {{ .Values.init.image }}:{{ .Values.init.tag }}
++          imagePullPolicy: Never
+           command: ['sh', '/config/configure']
+           volumeMounts:
+           - name: {{ .Release.Name }}
+diff --git a/services/bdev/gitlab/helm/charts/redis/templates/deployment.yaml b/services/bdev/gitlab/helm/charts/redis/templates/deployment.yaml
+index 5427b76..c08db61 100644
+--- a/services/bdev/gitlab/helm/charts/redis/templates/deployment.yaml
++++ b/services/bdev/gitlab/helm/charts/redis/templates/deployment.yaml
+@@ -30,6 +30,7 @@ spec:
+       initContainers:
+         - name: configure
+           image: {{ .Values.init.image }}:{{ .Values.init.tag }}
++          imagePullPolicy: Never
+           command: ['sh', '/config/configure']
+           securityContext:
+             allowPrivilegeEscalation: {{ .Values.securityContext.allowPrivilegeEscalation }}
