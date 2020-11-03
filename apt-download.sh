@@ -8,3 +8,6 @@ apt install -y -d --reinstall -o=dir::cache=/tmp \
     openssh-server ca-certificates tzdata xinetd \
     apt-transport-https gnupg-agent software-properties-common \
     htop socat ansible git
+tar cf archives.tar /tmp/archives
+gzip -9 /tmp/archives.tar.gz
+rm -rf /tmp/archives
