@@ -15,7 +15,7 @@ then
     cat gpg | sudo apt-key add -
     sudo dpkg --add-architecture i386
     sudo apt update
-    sudo apt install -y -d -o=dir::cache=$(pwd) $PKGS
+    sudo apt install --reinstall -y -d -o=dir::cache=$(pwd) $PKGS
 elif [ "$1" == "install" ]
 then
     sudo apt install -y -o=dir::cache=$(pwd) $PKGS
